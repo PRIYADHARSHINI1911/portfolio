@@ -73,6 +73,21 @@ document.querySelectorAll('.timeline-item, .project-card, .skill-category, .cert
 // ========== Navbar Background on Scroll ==========
 window.addEventListener('scroll', () => {
     const navbar = document.querySelector('.navbar');
+    const heroContent = document.querySelector('.hero-content');
+    const heroScroll = document.querySelector('.hero-scroll');
+    const scrollProgress = window.scrollY / window.innerHeight;
+    
+    // Fade out hero content and scroll indicator
+    if (heroContent) {
+        heroContent.style.opacity = Math.max(0, 1 - scrollProgress * 1.5);
+        heroContent.style.pointerEvents = scrollProgress > 0.5 ? 'none' : 'auto';
+    }
+    
+    if (heroScroll) {
+        heroScroll.style.opacity = Math.max(0, 1 - scrollProgress * 1.5);
+        heroScroll.style.pointerEvents = scrollProgress > 0.5 ? 'none' : 'auto';
+    }
+    
     if (window.scrollY > 50) {
         navbar.style.background = 'rgba(15, 23, 42, 0.95)';
         navbar.style.backdropFilter = 'blur(15px)';
@@ -255,6 +270,24 @@ skipCSS.textContent = `
     }
 `;
 document.head.appendChild(skipCSS);
+
+// ========== Scroll to Top Button ==========
+const scrollToTopBtn = document.getElementById('scrollToTopBtn');
+
+window.addEventListener('scroll', () => {
+    if (window.pageYOffset > 300) {
+        scrollToTopBtn.classList.add('show');
+    } else {
+        scrollToTopBtn.classList.remove('show');
+    }
+});
+
+scrollToTopBtn.addEventListener('click', () => {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+});
 
 // ========== Console Message ==========
 console.log(
