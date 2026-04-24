@@ -2,17 +2,47 @@
 const navToggle = document.getElementById('navToggle');
 const navMenu = document.getElementById('navMenu');
 
-navToggle.addEventListener('click', () => {
-    navMenu.classList.toggle('active');
-    navToggle.classList.toggle('active');
+const closeMenu = () => {
+    navMenu.classList.remove('active');
+    navToggle.classList.remove('active');
+};
+
+const openMenu = () => {
+    navMenu.classList.add('active');
+    navToggle.classList.add('active');
+};
+
+navToggle.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (navMenu.classList.contains('active')) {
+        closeMenu();
+    } else {
+        openMenu();
+    }
 });
 
 // Close menu when a link is clicked
 document.querySelectorAll('.nav-menu a').forEach(link => {
-    link.addEventListener('click', () => {
-        navMenu.classList.remove('active');
-        navToggle.classList.remove('active');
+    link.addEventListener('click', (e) => {
+        closeMenu();
     });
+});
+
+// Also close when clicking outside the menu
+document.addEventListener('click', (e) => {
+    const isClickInsideMenu = navMenu.contains(e.target);
+    const isClickOnToggle = navToggle.contains(e.target);
+    
+    if (!isClickInsideMenu && !isClickOnToggle && navMenu.classList.contains('active')) {
+        closeMenu();
+    }
+});
+
+// Close menu on Escape key
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && navMenu.classList.contains('active')) {
+        closeMenu();
+    }
 });
 
 // ========== Form Submission ==========
