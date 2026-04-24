@@ -49,32 +49,21 @@ document.addEventListener('keydown', (e) => {
 const contactForm = document.getElementById('contactForm');
 
 contactForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-
-    const formData = new FormData(contactForm);
-    const name = contactForm.querySelector('input[type="text"]').value;
-    const email = contactForm.querySelector('input[type="email"]').value;
-    const message = contactForm.querySelector('textarea').value;
-
-    // Create mailto link
-    const mailtoLink = `mailto:priyakrish816@gmail.com?subject=Portfolio Contact from ${encodeURIComponent(name)}&body=Name: ${encodeURIComponent(name)}%0AEmail: ${encodeURIComponent(email)}%0A%0AMessage:%0A${encodeURIComponent(message)}`;
-
-    // Show success message
-    const originalText = contactForm.querySelector('button').textContent;
-    contactForm.querySelector('button').textContent = 'Opening email client...';
-
-    // Open default email client
-    window.location.href = mailtoLink;
-
-    // Reset button text after 2 seconds
+    const button = contactForm.querySelector('button');
+    const originalText = button.textContent;
+    button.textContent = 'Sending...';
+    button.disabled = true;
+    
+    // FormSubmit will handle the actual submission
+    // Just provide user feedback
     setTimeout(() => {
-        contactForm.querySelector('button').textContent = originalText;
-    }, 2000);
-
-    // Reset form
-    setTimeout(() => {
-        contactForm.reset();
-    }, 1000);
+        button.textContent = 'Message Sent! ✓';
+        setTimeout(() => {
+            button.textContent = originalText;
+            button.disabled = false;
+            contactForm.reset();
+        }, 2000);
+    }, 500);
 });
 
 // ========== Scroll Animations ==========
