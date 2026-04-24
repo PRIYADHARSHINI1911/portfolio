@@ -89,10 +89,10 @@ window.addEventListener('scroll', () => {
     }
     
     if (window.scrollY > 50) {
-        navbar.style.background = 'rgba(15, 23, 42, 0.95)';
+        navbar.style.background = 'var(--primary-color)';
         navbar.style.backdropFilter = 'blur(15px)';
     } else {
-        navbar.style.background = 'rgba(15, 23, 42, 0.8)';
+        navbar.style.background = 'var(--primary-color)';
         navbar.style.backdropFilter = 'blur(10px)';
     }
 });
@@ -127,15 +127,13 @@ window.addEventListener('scroll', () => {
     });
 
     document.querySelectorAll('.nav-menu a').forEach(link => {
-        link.style.color = '';
-        link.style.fontWeight = '';
+        link.classList.remove('active');
     });
 
     if (current) {
         const activeLink = document.querySelector(`.nav-menu a[href="#${current}"]`);
         if (activeLink) {
-            activeLink.style.color = 'var(--primary-color)';
-            activeLink.style.fontWeight = '700';
+            activeLink.classList.add('active');
         }
     }
 });
